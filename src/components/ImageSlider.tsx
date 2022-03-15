@@ -15,6 +15,20 @@ const ImageSlider = () => {
     // slides == images
   const [images, setImages] = useState<ImageObject[]>([]);
   const [currentImage, setCurrentImage] = useState(0);
+  const numberOfImages = images.length
+
+  
+
+  const nextSlide = () => {
+      setCurrentImage(currentImage === numberOfImages -1 ? 0: currentImage + 1)
+  }
+
+  const prevSlide = () => {
+      setCurrentImage(currentImage === 0 ? numberOfImages -1 : currentImage -1)
+  }
+  console.log(currentImage);
+  
+  
 
 
   const fetchImage = async () => {
@@ -31,7 +45,6 @@ const ImageSlider = () => {
     }
   };
 
-  console.log(images);
 
   useEffect(() => {
     fetchImage();
@@ -42,8 +55,8 @@ const ImageSlider = () => {
   }
   return (
     <section className='slider'>
-        {/* <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}/> */}
-        {/* <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide}/> */}
+        <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}/>
+        <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide}/>
 
       {images.map((image) => {
         return (

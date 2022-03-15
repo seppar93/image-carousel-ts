@@ -12,24 +12,19 @@ interface ImageObject {
 }
 
 const ImageSlider = () => {
-    // slides == images
+  // slides == images
   const [images, setImages] = useState<ImageObject[]>([]);
   const [currentImage, setCurrentImage] = useState(0);
-  const numberOfImages = images.length
-
-  
+  const numberOfImages = images.length;
 
   const nextSlide = () => {
-      setCurrentImage(currentImage === numberOfImages -1 ? 0: currentImage + 1)
-  }
+    setCurrentImage(currentImage === numberOfImages - 1 ? 0 : currentImage + 1);
+  };
 
   const prevSlide = () => {
-      setCurrentImage(currentImage === 0 ? numberOfImages -1 : currentImage -1)
-  }
+    setCurrentImage(currentImage === 0 ? numberOfImages - 1 : currentImage - 1);
+  };
   console.log(currentImage);
-  
-  
-
 
   const fetchImage = async () => {
     const preloaded = sessionStorage.getItem('images');
@@ -45,22 +40,30 @@ const ImageSlider = () => {
     }
   };
 
-
   useEffect(() => {
     fetchImage();
   }, []);
 
-  if(!Array.isArray(images) || images.length <= 0) {
-      return null;
+  if (!Array.isArray(images) || images.length <= 0) {
+    return null;
   }
   return (
     <section className='slider'>
-        <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}/>
-        <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide}/>
+      <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
+      <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
 
-      {images.map((image) => {
+      {images.map((image,idx) => {
         return (
-          <img key={image.id} src={image.urls.regular} alt={image.user.bio} className='image' />
+          <div className={idx === currentImage ? 'slide active': 'slide' } key={image.id}>
+              {idx === currentImage && (
+                <img
+              src={image.urls.regular}
+              alt={image.user.bio}
+              className='image'
+            />
+              )}
+            
+          </div>
         );
       })}
     </section>

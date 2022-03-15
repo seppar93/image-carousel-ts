@@ -16,6 +16,7 @@ const ImageSlider = () => {
   const [images, setImages] = useState<ImageObject[]>([]);
   const [currentImage, setCurrentImage] = useState(0);
 
+
   const fetchImage = async () => {
     const preloaded = sessionStorage.getItem('images');
 
@@ -36,6 +37,9 @@ const ImageSlider = () => {
     fetchImage();
   }, []);
 
+  if(!Array.isArray(images) || images.length <= 0) {
+      return null;
+  }
   return (
     <section className='slider'>
         {/* <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}/> */}
@@ -43,7 +47,7 @@ const ImageSlider = () => {
 
       {images.map((image) => {
         return (
-          <img key={image.id} src={image.urls.regular} alt={image.user.bio} />
+          <img key={image.id} src={image.urls.regular} alt={image.user.bio} className='image' />
         );
       })}
     </section>
